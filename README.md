@@ -1,5 +1,5 @@
 <center>
-<h1> HospitalApplication </h1>
+<h1> Hospital Management System </h1>
 </center>
 <center>
 <a href="Java url">
