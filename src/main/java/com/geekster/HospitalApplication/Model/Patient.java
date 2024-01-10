@@ -4,9 +4,11 @@ package com.geekster.HospitalApplication.Model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
@@ -17,21 +19,22 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long patientId;
-    private String patientFirstName;
-    private String patientLastName;
-    private String patientEmail;
-    private String patientPassword;
-    private String patientContact;
+    private Integer patientId;
 
-    public Patient(String patientFirstName, String patientLastName, String patientEmail, String patientPassword, String patientContact) {
-        this.patientFirstName = patientFirstName;
-        this.patientLastName = patientLastName;
-        this.patientEmail = patientEmail;
-        this.patientPassword = patientPassword;
-        this.patientContact = patientContact;
-    }
+    @Length(min = 3,message = "Please enter at least 3 Character")
+    private String patientName;
 
-    @OneToOne(mappedBy = "patient")
-    private Appointment appointment;
+    @Length(max = 20,message = "Please enter maximum 20 Character")
+    private String city;
+
+    @Email(message = "Please enter valid email address")
+    private String email;
+
+    @Length(min = 10,message = "Please enter minimum 10 numbers")
+    private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "symptom", nullable = false)
+    private Symptom symptom;
+
 }

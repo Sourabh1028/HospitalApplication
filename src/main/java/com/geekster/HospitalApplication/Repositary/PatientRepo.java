@@ -3,7 +3,10 @@ package com.geekster.HospitalApplication.Repositary;
 import com.geekster.HospitalApplication.Model.Patient;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PatientRepo extends CrudRepository<Patient, Long> {
+import java.util.Optional;
 
-    Patient findFirstByPatientEmail(String userEmail);
+public interface PatientRepo extends CrudRepository<Patient, Integer> {
+
+    void deleteById(Integer patientId);
+
 }

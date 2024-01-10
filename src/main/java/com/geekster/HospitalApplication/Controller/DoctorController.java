@@ -1,8 +1,8 @@
 package com.geekster.HospitalApplication.Controller;
 
-import com.geekster.HospitalApplication.Model.Appointment;
 import com.geekster.HospitalApplication.Model.Doctor;
 import com.geekster.HospitalApplication.Service.DoctorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,30 +17,21 @@ public class DoctorController {
     @Autowired
     DoctorService doctorService;
 
-    @PostMapping("/")
-    public void addDoctors(@RequestBody Doctor doctor)
-    {
-         doctorService.addDoctors(doctor);
+    @PostMapping("/addDoctor")
+    ResponseEntity<String> addDoctor(@RequestBody Doctor doctor){
+        doctorService.addDoctor(doctor);
+        return new ResponseEntity<>("Doctor added successfully...!", HttpStatus.CREATED);
     }
 
-    @GetMapping("{docId}/appointment")
-    ResponseEntity<List<Appointment>> getDocMyAppointment(@PathVariable Long docId){
-        List<Appointment> myAppointment = null;
-        HttpStatus status;
-        try{
-             myAppointment = doctorService.getMyAppointment(docId);
-             //System.out.println(myAppointment);
-             if(myAppointment.isEmpty()){
-                 status=HttpStatus.NO_CONTENT;
-             }
-             else{
-                 status=HttpStatus.OK;
-             }
-        }
-        catch(Exception e){
-            System.out.println("Doc Id is Not Valid...!!!");
-            status=HttpStatus.BAD_REQUEST;
-        }
-        return new ResponseEntity<List<Appointment>>(myAppointment, status);
+    @GetMapping("/getAllDoctors")
+    public List<Doctor> getAllUser(){
+        return doctorService.getAllDocs();
     }
+
+    @DeleteMapping("/removeDoctor/{doctorId}")
+    ResponseEntity<String> removeDoctor(@PathVariable Long doctorId){
+        doctorService.removeDoctor(doctorId);
+        return new ResponseEntity<>("Doctor removed successfully...!", HttpStatus.FOUND);
+    }
+
 }

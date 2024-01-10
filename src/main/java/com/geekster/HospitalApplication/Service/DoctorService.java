@@ -1,6 +1,5 @@
 package com.geekster.HospitalApplication.Service;
 
-import com.geekster.HospitalApplication.Model.Appointment;
 import com.geekster.HospitalApplication.Model.Doctor;
 import com.geekster.HospitalApplication.Repositary.DoctorRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ public class DoctorService {
     @Autowired
     DoctorRepo doctorRepo;
 
-    public void addDoctors(Doctor doctor) {
+    public void addDoctor(Doctor doctor) {
         doctorRepo.save(doctor);
     }
 
@@ -23,11 +22,7 @@ public class DoctorService {
         return doctorList;
     }
 
-    public List<Appointment> getMyAppointment(Long docId) {
-        Doctor myDoc = doctorRepo.findByDoctorId(docId);
-        if(myDoc == null){
-            throw  new IllegalStateException("The doctor does not exist...");
-        }
-        return myDoc.getAppointments();
+    public void removeDoctor(Long doctorId) {
+        doctorRepo.deleteById(doctorId);
     }
 }
